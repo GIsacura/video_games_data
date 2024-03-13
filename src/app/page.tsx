@@ -1,6 +1,3 @@
-import Header from "@/components/Header";
-import Image from "next/image";
-import { getAllGames } from "./actions/getAllGames";
 import GamesBoard from "@/components/GamesBoard";
 
 export default function Home({
@@ -10,10 +7,13 @@ export default function Home({
 }) {
 	return (
 		<div>
-			<Header />
 			<section className="my-[50px] px-5">
 				<GamesBoard searchParams={searchParams} />
 			</section>
+
+			<footer className="flex justify-center items-center h-20 bg-gray-800 text-white">
+				<p>© 2021 - Game Catalog</p>
+			</footer>
 		</div>
 	);
 }

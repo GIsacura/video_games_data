@@ -32,7 +32,7 @@ const Header = () => {
 			params.delete("name");
 		}
 
-		replace(`${pathname}?${params.toString()}`);
+		replace(`/?${params.toString()}`);
 	};
 
 	const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -54,7 +54,7 @@ const Header = () => {
 
 	return (
 		<header
-			className="h-[600px] w-full bg-cover bg-center bg-no-repeat flex flex-col justify-center items-center"
+			className="text-black h-[400px] w-full bg-cover bg-center bg-no-repeat flex flex-col justify-center items-center"
 			style={{
 				backgroundImage: `linear-gradient(93deg, rgba(255, 255, 255, 0.5) 100%,  rgba(255, 255, 255, 0.5) 100%), url(${BannerImage.src})`,
 			}}
@@ -85,12 +85,18 @@ const Header = () => {
 					{autocompleteGames.length > 0 && (
 						<ul className="absolute top-[110%] bg-slate-50 text-black rounded w-full">
 							{autocompleteGames.map((value) => (
-								<li
+								<Link
 									key={value._id}
-									className="hover:bg-black hover:text-slate-50 p-1"
+									onClick={() => {
+										setAutocompleteGames([]);
+										setGameName(value.name);
+									}}
+									href={`/${value._id}`}
 								>
-									<Link href={`/${value._id}`}>{value.name}</Link>
-								</li>
+									<li className="hover:bg-black hover:text-slate-50 p-1">
+										{value.name}
+									</li>
+								</Link>
 							))}
 						</ul>
 					)}
