@@ -2,9 +2,11 @@ import HttpService from "./Http";
 import { GameInfo } from "@/components/GamesBoard";
 
 interface Props {
-	limit: string;
-	offset: string;
+	limit?: string;
+	offset?: string;
 	name?: string;
+	genres?: string;
+	platforms?: string;
 }
 
 export interface AutocompleteResponse {
@@ -12,12 +14,12 @@ export interface AutocompleteResponse {
 	name: string;
 }
 
-export interface GetAllGamesResponse{
+export interface GetAllGamesResponse {
 	records: GameInfo[];
-	pageInfo:{
-		id:null,
-		totalRecords: number,
-	}
+	pageInfo: {
+		id: null;
+		totalRecords: number;
+	};
 }
 
 export class GameService {
@@ -25,12 +27,16 @@ export class GameService {
 		limit,
 		offset,
 		name,
+		genres,
+		platforms,
 	}: Props): Promise<GetAllGamesResponse> {
 		const queriesArray = [];
 
 		if (limit) queriesArray.push(`limit=${limit}`);
 		if (offset) queriesArray.push(`offset=${offset}`);
 		if (name) queriesArray.push(`name=${name}`);
+		if (genres) queriesArray.push(`genres=${genres}`);
+		if (platforms) queriesArray.push(`platforms=${platforms}`);
 
 		const queriesString = queriesArray.join("&");
 
@@ -39,7 +45,7 @@ export class GameService {
 			return response;
 		} catch (error) {
 			console.log({ error });
-			return { records: [], pageInfo: { id: null, totalRecords: 0 }}
+			return { records: [], pageInfo: { id: null, totalRecords: 0 } };
 		}
 	}
 

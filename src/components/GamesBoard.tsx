@@ -48,9 +48,11 @@ const GamesBoard = async ({
 	const { limit, offset, name, platforms, genres } = searchParams || {};
 
 	const games = await GameService.getAllGames({
-		limit: limit ?? "50",
-		offset: offset ?? "0",
+		limit,
+		offset,
 		name,
+		platforms,
+		genres,
 	});
 
 	return (
