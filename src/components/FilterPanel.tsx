@@ -1,9 +1,15 @@
 "use client";
 import { Filters } from "@/app/page";
 import Image from "next/image";
-import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
+import React, {
+	Dispatch,
+	SetStateAction,
+	useEffect,
+	useRef,
+	useState,
+} from "react";
 import DownArrow from "../assets/icons/svg/down-arrow.svg";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 
 export interface FilterPanelProps {
 	setSearchFilters: Dispatch<SetStateAction<Filters>>;
@@ -226,11 +232,15 @@ const Genres = ({ setSearchFilters, searchFilters }: FilterPanelProps) => {
 	);
 };
 
-const FilterPanel = ({ setSearchFilters, searchFilters }: FilterPanelProps) => {
+const FilterPanel = () => {
 	const searchParams = useSearchParams();
 	const params = new URLSearchParams(searchParams);
 	const { replace } = useRouter();
-	const { platforms, genres } = searchFilters;
+	const firstRenderRef = useRef(true);
+	const [searchFilters, setSearchFilters] = useState<Filters>({
+		platforms: [],
+		genres: [],
+	});
 
 	useEffect(() => {
 		if (params.get("platforms")) {
@@ -249,20 +259,24 @@ const FilterPanel = ({ setSearchFilters, searchFilters }: FilterPanelProps) => {
 	}, []);
 
 	useEffect(() => {
-		handleSearchPlatforms();
+		if (firstRenderRef.current) {
+			firstRenderRef.current = false; // Marca la primera renderización como completada
+		} else {
+			handleSearchPlatforms();
+		}
 	}, [searchFilters]);
 
 	const handleSearchPlatforms = () => {
 		const params = new URLSearchParams(searchParams);
 
-		if (platforms.length > 0) {
-			params.set("platforms", platforms.join("%"));
+		if (searchFilters.platforms.length > 0) {
+			params.set("platforms", searchFilters.platforms.join("%"));
 		} else {
 			params.delete("platforms");
 		}
 
-		if (genres.length > 0) {
-			params.set("genres", genres.join("%"));
+		if (searchFilters.genres.length > 0) {
+			params.set("genres", searchFilters.genres.join("%"));
 		} else {
 			params.delete("genres");
 		}

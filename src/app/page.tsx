@@ -1,7 +1,5 @@
-"use client";
 import FilterPanel from "@/components/FilterPanel";
 import GamesBoard from "@/components/GamesBoard";
-import { useState } from "react";
 
 export interface Filters {
 	platforms: string[];
@@ -13,23 +11,15 @@ export default function Home({
 }: {
 	searchParams?: { limit?: string; offset?: string; name?: string };
 }) {
-	const [searchFilters, setSearchFilters] = useState<Filters>({
-		platforms: [],
-		genres: [],
-	});
-
 	return (
 		<div>
 			<div className="flex flex-row max-w-[1500px] w-full mx-auto">
 				<section className="w-[250px]">
-					<FilterPanel
-						setSearchFilters={setSearchFilters}
-						searchFilters={searchFilters}
-					/>
+					<FilterPanel />
 				</section>
 
 				<section className="my-[50px] px-5">
-					{/* <GamesBoard searchParams={searchParams} /> */}
+					<GamesBoard searchParams={searchParams} />
 				</section>
 			</div>
 

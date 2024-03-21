@@ -1,6 +1,5 @@
 import React from "react";
 import GameCard from "./GameCard";
-import { getAllGames } from "@/app/actions/getAllGames";
 import { GameService } from "@/services/game.service";
 
 export interface GameInfo {
@@ -37,9 +36,16 @@ export interface GameInfo {
 const GamesBoard = async ({
 	searchParams,
 }: {
-	searchParams?: { limit?: string; offset?: string; name?: string };
+	searchParams?: {
+		limit?: string;
+		offset?: string;
+		name?: string;
+		params?: string;
+		genres?: string;
+		platforms?: string;
+	};
 }) => {
-	const { limit, offset, name } = searchParams || {};
+	const { limit, offset, name, platforms, genres } = searchParams || {};
 
 	const games = await GameService.getAllGames({
 		limit: limit ?? "50",
@@ -48,7 +54,7 @@ const GamesBoard = async ({
 	});
 
 	return (
-		<div className="grid xs:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 justify-items-center gap-5 w-full">
+		<div className="grid xs:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 justify-items-center gap-5 w-full">
 			{games.records.map((game) => (
 				<GameCard gameInfo={game} key={game._id} />
 			))}
