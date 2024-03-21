@@ -54,22 +54,22 @@ const Header = () => {
 
 	return (
 		<header
-			className="text-black h-[400px] w-full bg-cover bg-center bg-no-repeat flex flex-col justify-center items-center"
-			style={{
-				backgroundImage: `linear-gradient(93deg, rgba(255, 255, 255, 0.5) 100%,  rgba(255, 255, 255, 0.5) 100%), url(${BannerImage.src})`,
-			}}
+			className="text-black w-full flex flex-col justify-center items-center bg-black py-3"
+			// style={{
+			// 	backgroundImage: `linear-gradient(93deg, rgba(255, 255, 255, 0.5) 100%,  rgba(255, 255, 255, 0.5) 100%), url(${BannerImage.src})`,
+			// }}
 		>
-			<h1 className="font-bold text-center xs:text-[40px] text-[70px] w-[90%]">
+			{/* <h1 className="font-bold text-center xs:text-[40px] text-[70px] w-[90%]">
 				Explore a Video Games Database
 			</h1>
 			<p className="text-center font-[500] text-[20px] w-[90%]">
 				You can see information about 400,000+ video games, from their release
 				date to who made them.
-			</p>
+			</p> */}
 
 			<form
 				onSubmit={handleSubmit}
-				className="flex flex-row xs:w-[90%] sm:w-[80%] max-w-[600px] justify-between align-center mt-10"
+				className="flex flex-row xs:w-[90%] sm:w-[80%] max-w-[600px] justify-between align-center"
 			>
 				<div className="w-[80%] relative">
 					<input
@@ -78,6 +78,7 @@ const Header = () => {
 							setGameName(event.target.value);
 							handleAutocomplete(event.target.value);
 						}}
+						placeholder="Search for a game..."
 						value={gameName}
 						className="w-full h-[40px] rounded px-2"
 					/>
@@ -93,7 +94,7 @@ const Header = () => {
 									}}
 									href={`/${value._id}`}
 								>
-									<li className="hover:bg-black hover:text-slate-50 p-1">
+									<li className="hover:bg-orange-400 hover:text-black p-1 rounded">
 										{value.name}
 									</li>
 								</Link>
@@ -103,7 +104,7 @@ const Header = () => {
 				</div>
 				<button
 					type="submit"
-					className="w-[100px] h-[40px] bg-black text-white p-2 rounded ml-2"
+					className="w-[100px] h-[40px] bg-orange-400 text-black font-bold p-2 rounded ml-2"
 				>
 					Search
 				</button>

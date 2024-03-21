@@ -49,7 +49,7 @@ const GamesBoard = async ({
 
 	return (
 		<div className="grid xs:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 justify-items-center gap-5 w-full">
-			{games.map((game) => (
+			{games.records.map((game) => (
 				<GameCard gameInfo={game} key={game._id} />
 			))}
 		</div>

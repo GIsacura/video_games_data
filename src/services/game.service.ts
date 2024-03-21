@@ -12,12 +12,20 @@ export interface AutocompleteResponse {
 	name: string;
 }
 
+export interface GetAllGamesResponse{
+	records: GameInfo[];
+	pageInfo:{
+		id:null,
+		totalRecords: number,
+	}
+}
+
 export class GameService {
 	static async getAllGames({
 		limit,
 		offset,
 		name,
-	}: Props): Promise<GameInfo[]> {
+	}: Props): Promise<GetAllGamesResponse> {
 		const queriesArray = [];
 
 		if (limit) queriesArray.push(`limit=${limit}`);
@@ -31,7 +39,7 @@ export class GameService {
 			return response;
 		} catch (error) {
 			console.log({ error });
-			return [];
+			return { records: [], pageInfo: { id: null, totalRecords: 0 }}
 		}
 	}
 
