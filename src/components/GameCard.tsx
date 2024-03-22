@@ -75,23 +75,17 @@ export const PlatformTags = ({
 const GameCard = ({ gameInfo }: GameCardProps) => {
 	const genresArray = gameInfo.genres?.split("||");
 	const platformsArray = gameInfo.platforms?.split("||");
+	const releaseDate = new Date(gameInfo?.released ?? "");
 	return (
 		<Link
-			className="text-white border w-[300px] h-[300px] border-white rounded p-5 flex flex-col justify-center align-middle cursor-pointer bg-slate-500/50 hover:bg-slate-500/75"
+			className="text-white w-[300px] h-[200px] rounded-md p-5 flex justify-between align-middle cursor-pointer hover:shadow-md hover:shadow-black"
 			href={`/${gameInfo._id}`}
 		>
-			<p className="text-center text-[20px]">{gameInfo.name}</p>
-			<GenreTags
-				genres={genresArray ?? []}
-				containerStyles="mt-2 flex flex-wrap gap-1 justify-center"
-			/>
-			<PlatformTags
-				platforms={platformsArray ?? []}
-				containerStyles="mt-2 flex flex-wrap gap-1 justify-center"
-			/>
-			{platformsArray && platformsArray.length > 3 && (
-				<p className="text-white text-center">more...</p>
-			)}
+			<div className="h-full w-[40%] rounded-lg bg-slate-400"></div>
+			<div className="w-[50%]">
+				<p className="text-center text-[18px]">{gameInfo.name}</p>
+				<p className="text-[12px] text-center">{releaseDate.toDateString()}</p>
+			</div>
 		</Link>
 	);
 };
