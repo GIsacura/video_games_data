@@ -3,7 +3,7 @@ import { GameInfo } from "@/components/GamesBoard";
 
 interface Props {
 	limit?: string;
-	offset?: string;
+	page?: string;
 	name?: string;
 	genres?: string;
 	platforms?: string;
@@ -16,16 +16,18 @@ export interface AutocompleteResponse {
 
 export interface GetAllGamesResponse {
 	records: GameInfo[];
-	pageInfo: {
-		id: null;
-		totalRecords: number;
-	};
+	pageInfo: [
+		{
+			id: null;
+			totalRecords: number;
+		}
+	];
 }
 
 export class GameService {
 	static async getAllGames({
 		limit,
-		offset,
+		page,
 		name,
 		genres,
 		platforms,
@@ -33,7 +35,7 @@ export class GameService {
 		const queriesArray = [];
 
 		if (limit) queriesArray.push(`limit=${limit}`);
-		if (offset) queriesArray.push(`offset=${offset}`);
+		if (page) queriesArray.push(`page=${page}`);
 		if (name) queriesArray.push(`name=${name}`);
 		if (genres) queriesArray.push(`genres=${genres}`);
 		if (platforms) queriesArray.push(`platforms=${platforms}`);
@@ -45,7 +47,7 @@ export class GameService {
 			return response;
 		} catch (error) {
 			console.log({ error });
-			return { records: [], pageInfo: { id: null, totalRecords: 0 } };
+			return { records: [], pageInfo: [{ id: null, totalRecords: 0 }] };
 		}
 	}
 

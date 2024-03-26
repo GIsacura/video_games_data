@@ -262,20 +262,32 @@ const FilterPanel = () => {
 		if (firstRenderRef.current) {
 			firstRenderRef.current = false; // Marca la primera renderización como completada
 		} else {
-			handleSearchPlatforms();
+			handleSearch();
 		}
 	}, [searchFilters]);
 
-	const handleSearchPlatforms = () => {
+	const handleSearch = () => {
 		const params = new URLSearchParams(searchParams);
+		const platforms = params.get("platforms");
+		const genres = params.get("genres");
+
+		if (!params.get("platforms") && !params.get("genres")) {
+			params.delete("page");
+		}
 
 		if (searchFilters.platforms.length > 0) {
+			if (platforms !== searchFilters.platforms.join("%")) {
+				params.delete("page");
+			}
 			params.set("platforms", searchFilters.platforms.join("%"));
 		} else {
 			params.delete("platforms");
 		}
 
 		if (searchFilters.genres.length > 0) {
+			if (genres !== searchFilters.genres.join("%")) {
+				params.delete("page");
+			}
 			params.set("genres", searchFilters.genres.join("%"));
 		} else {
 			params.delete("genres");

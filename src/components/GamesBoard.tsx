@@ -2,6 +2,8 @@ import React from "react";
 import GameCard from "./GameCard";
 import { GameService } from "@/services/game.service";
 
+import Pagination from "./Pagination";
+
 export interface GameInfo {
 	_id: string;
 	id: string;
@@ -38,29 +40,36 @@ const GamesBoard = async ({
 }: {
 	searchParams?: {
 		limit?: string;
-		offset?: string;
+		page?: string;
 		name?: string;
 		params?: string;
 		genres?: string;
 		platforms?: string;
 	};
 }) => {
-	const { limit, offset, name, platforms, genres } = searchParams || {};
+	const { limit, page, name, platforms, genres } = searchParams || {};
 
 	const games = await GameService.getAllGames({
 		limit,
-		offset,
+		page,
 		name,
 		platforms,
 		genres,
 	});
 
 	return (
-		<div className="grid xs:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 justify-items-center gap-5 w-full">
-			{games.records.map((game) => (
-				<GameCard gameInfo={game} key={game._id} />
-			))}
-		</div>
+		<section className="w-full">
+			<p className="text-slate-600">
+				{games.pageInfo[0].totalRecords.toLocaleString("en-US")} results
+			</p>
+			<Pagination totalRecords={games.pageInfo[0].totalRecords} />
+			<div className="grid xs:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 justify-items-center gap-5 w-full">
+				{games.records.map((game) => (
+					<GameCard gameInfo={game} key={game._id} />
+				))}
+			</div>
+			<Pagination totalRecords={games.pageInfo[0].totalRecords} />
+		</section>
 	);
 };
 
