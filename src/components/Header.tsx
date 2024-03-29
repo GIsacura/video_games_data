@@ -1,7 +1,6 @@
 "use client";
-import React, { useState } from "react";
-import BannerImage from "../assets/video_games_wallpaper.webp";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import React, { useEffect, useRef, useState } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 import {
 	AutocompleteResponse,
 	getAutocompleteGames,
@@ -11,8 +10,8 @@ import { GameService } from "@/services/game.service";
 
 const Header = () => {
 	const searchParams = useSearchParams();
-	const pathname = usePathname();
 	const { replace } = useRouter();
+	const listRef = useRef<HTMLUListElement | null>(null);
 	const [gameName, setGameName] = useState(
 		searchParams.get("name")?.toString()
 	);
@@ -52,21 +51,21 @@ const Header = () => {
 		setAutocompleteGames(response);
 	};
 
-	return (
-		<header
-			className="text-black w-full flex flex-col justify-center items-center bg-black py-3"
-			// style={{
-			// 	backgroundImage: `linear-gradient(93deg, rgba(255, 255, 255, 0.5) 100%,  rgba(255, 255, 255, 0.5) 100%), url(${BannerImage.src})`,
-			// }}
-		>
-			{/* <h1 className="font-bold text-center xs:text-[40px] text-[70px] w-[90%]">
-				Explore a Video Games Database
-			</h1>
-			<p className="text-center font-[500] text-[20px] w-[90%]">
-				You can see information about 400,000+ video games, from their release
-				date to who made them.
-			</p> */}
+	useEffect(() => {
+		function handleClickOutside(event: MouseEvent) {
+			if (listRef.current && !listRef.current.contains(event.target as Node)) {
+				setAutocompleteGames([]);
+			}
+		}
 
+		document.addEventListener("mousedown", handleClickOutside);
+		return () => {
+			document.removeEventListener("mousedown", handleClickOutside);
+		};
+	}, [listRef]);
+
+	return (
+		<header className="text-black w-full flex flex-col justify-center items-center bg-black py-3">
 			<form
 				onSubmit={handleSubmit}
 				className="flex flex-row xs:w-[90%] sm:w-[80%] max-w-[600px] justify-between align-center"
@@ -84,7 +83,10 @@ const Header = () => {
 					/>
 
 					{autocompleteGames.length > 0 && (
-						<ul className="absolute top-[110%] bg-slate-50 text-black rounded w-full">
+						<ul
+							ref={listRef}
+							className="absolute top-[110%] bg-slate-50 text-black rounded w-full"
+						>
 							{autocompleteGames.map((value) => (
 								<Link
 									key={value._id}

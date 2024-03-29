@@ -21,6 +21,9 @@ export default function RootLayout({
 			<body className={inter.className}>
 				<Header />
 				{children}
+				<footer className="flex justify-center items-center fixed bottom-0 w-full h-20 bg-gray-800 text-white">
+					<p>Game Catalog</p>
+				</footer>
 			</body>
 		</html>
 	);
