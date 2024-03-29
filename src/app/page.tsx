@@ -22,7 +22,7 @@ export default function Home({
 						href="https://www.kaggle.com/datasets/jummyegg/rawg-game-dataset/data"
 						target="_blank"
 					>
-						Trung Hoang's dataset in Kaggle
+						Trung Hoang&apos;s dataset in Kaggle
 					</Link>{" "}
 					and contains video game information up to the year 2020.
 				</p>
