@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Suspense } from "react";
 import GameCard from "./GameCard";
 import { GameService } from "@/services/game.service";
 
@@ -62,13 +62,17 @@ const GamesBoard = async ({
 			<p className="text-slate-600">
 				{games.pageInfo[0].totalRecords.toLocaleString("en-US")} results
 			</p>
-			<Pagination totalRecords={games.pageInfo[0].totalRecords} />
+			<Suspense fallback={<div>Loading...</div>}>
+				<Pagination totalRecords={games.pageInfo[0].totalRecords} />
+			</Suspense>
 			<div className="grid xs:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 justify-items-center gap-5 w-full">
 				{games.records.map((game) => (
 					<GameCard gameInfo={game} key={game._id} />
 				))}
 			</div>
-			<Pagination totalRecords={games.pageInfo[0].totalRecords} />
+			<Suspense fallback={<div>Loading...</div>}>
+				<Pagination totalRecords={games.pageInfo[0].totalRecords} />
+			</Suspense>
 		</section>
 	);
 };

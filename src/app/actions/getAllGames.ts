@@ -1,4 +1,5 @@
 import { GameInfo } from "@/components/GamesBoard";
+import { API_BASE_URL } from "@/environments";
 
 interface Props {
 	limit: string;
@@ -20,9 +21,7 @@ export async function getAllGames({
 	const queriesString = queriesArray.join("&");
 
 	try {
-		const response = await fetch(
-			`http://localhost:3001/games?${queriesString}`
-		);
+		const response = await fetch(`${API_BASE_URL}/games?${queriesString}`);
 		const data = await response.json();
 		return data;
 	} catch (error) {

@@ -1,6 +1,7 @@
 import FilterPanel from "@/components/FilterPanel";
 import GamesBoard from "@/components/GamesBoard";
 import Link from "next/link";
+import { Suspense } from "react";
 
 export interface Filters {
 	platforms: string[];
@@ -29,7 +30,9 @@ export default function Home({
 			</div>
 			<div className="flex flex-row max-w-[1500px] w-full mx-auto">
 				<section className="w-[250px]">
-					<FilterPanel />
+					<Suspense fallback={<div>Loading...</div>}>
+						<FilterPanel />
+					</Suspense>
 				</section>
 				<section className="my-[50px] px-5">
 					<GamesBoard searchParams={searchParams} />

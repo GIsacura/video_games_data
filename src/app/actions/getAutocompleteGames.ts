@@ -1,3 +1,5 @@
+import { API_BASE_URL } from "@/environments";
+
 export interface AutocompleteResponse {
 	_id: string;
 	name: string;
@@ -8,7 +10,7 @@ export async function getAutocompleteGames(
 ): Promise<AutocompleteResponse[]> {
 	try {
 		const response = await fetch(
-			`http://localhost:3001/games/autocomplete?name=${name}`
+			`${API_BASE_URL}/games/autocomplete?name=${name}`
 		);
 		const data = await response.json();
 		return data;
