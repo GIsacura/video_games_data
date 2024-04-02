@@ -31,11 +31,11 @@ export default function Home({
 				</p>
 			</div>
 			<div className="flex flex-row max-w-[1500px] w-full mx-auto">
-				{/* <section>
+				<section>
 					<Suspense fallback={<div>Loading...</div>}>
 						<FilterPanel />
 					</Suspense>
-				</section> */}
+				</section>
 				<section className="my-[50px] mx-auto px-5">
 					<GamesBoard searchParams={searchParams} />
 				</section>
