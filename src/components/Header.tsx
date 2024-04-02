@@ -1,10 +1,7 @@
 "use client";
 import React, { useEffect, useRef, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
-import {
-	AutocompleteResponse,
-	getAutocompleteGames,
-} from "@/app/actions/getAutocompleteGames";
+import { AutocompleteResponse } from "@/app/actions/getAutocompleteGames";
 import Link from "next/link";
 import { GameService } from "@/services/game.service";
 
@@ -13,7 +10,7 @@ const Header = () => {
 	const { replace } = useRouter();
 	const listRef = useRef<HTMLUListElement | null>(null);
 	const [gameName, setGameName] = useState(
-		searchParams.get("name")?.toString()
+		searchParams.get("name")?.toString().split("_").join(" ") ?? ""
 	);
 	const [autocompleteGames, setAutocompleteGames] = useState<
 		AutocompleteResponse[]
@@ -26,12 +23,18 @@ const Header = () => {
 		params.set("limit", "50");
 
 		if (value) {
-			params.set("name", value);
+			params.set("name", value.split(" ").join("_"));
 		} else {
 			params.delete("name");
 		}
 
-		replace(`/?${params.toString()}`);
+		// console.log(params.toString());
+
+		try {
+			replace(`/?${params.toString()}`, { scroll: false });
+		} catch (error) {
+			console.log({ error });
+		}
 	};
 
 	const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -65,7 +68,7 @@ const Header = () => {
 	}, [listRef]);
 
 	return (
-		<header className="text-black w-full flex flex-col justify-center items-center bg-black py-3">
+		<header className="text-black w-full flex flex-col justify-center items-center bg-black py-3 h-[80px]">
 			<form
 				onSubmit={handleSubmit}
 				className="flex flex-row xs:w-[90%] sm:w-[80%] max-w-[600px] justify-between align-center"
@@ -85,7 +88,7 @@ const Header = () => {
 					{autocompleteGames.length > 0 && (
 						<ul
 							ref={listRef}
-							className="absolute top-[110%] bg-slate-50 text-black rounded w-full"
+							className="absolute top-[110%] bg-slate-50 text-black rounded w-full z-10"
 						>
 							{autocompleteGames.map((value) => (
 								<Link

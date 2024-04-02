@@ -24,7 +24,7 @@ export default function RootLayout({
 					<Header />
 				</Suspense>
 				{children}
-				<footer className="flex justify-center items-center fixed bottom-0 w-full h-20 bg-gray-800 text-white">
+				<footer className="flex justify-center items-center w-full h-[80px] bg-gray-800 text-white">
 					<p>Game Catalog</p>
 				</footer>
 			</body>

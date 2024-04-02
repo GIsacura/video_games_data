@@ -9,6 +9,7 @@ import React, {
 	useState,
 } from "react";
 import DownArrow from "../assets/icons/svg/down-arrow.svg";
+import RightArrow from "../assets/icons/svg/arrow-right.svg";
 import { useRouter, useSearchParams } from "next/navigation";
 
 export interface FilterPanelProps {
@@ -237,6 +238,8 @@ const FilterPanel = () => {
 	const params = new URLSearchParams(searchParams);
 	const { replace } = useRouter();
 	const firstRenderRef = useRef(true);
+	const filterPanelRef = useRef<HTMLDivElement | null>(null);
+	const [openFilterPanel, setOpenFilterPanel] = useState<boolean>(false);
 	const [searchFilters, setSearchFilters] = useState<Filters>({
 		platforms: [],
 		genres: [],
@@ -265,6 +268,22 @@ const FilterPanel = () => {
 			handleSearch();
 		}
 	}, [searchFilters]);
+
+	// useEffect(() => {
+	// 	function handleClickOutside(event: MouseEvent) {
+	// 		if (
+	// 			filterPanelRef.current &&
+	// 			!filterPanelRef.current.contains(event.target as Node)
+	// 		) {
+	// 			setOpenFilterPanel(false);
+	// 		}
+	// 	}
+
+	// 	document.addEventListener("mousedown", handleClickOutside);
+	// 	return () => {
+	// 		document.removeEventListener("mousedown", handleClickOutside);
+	// 	};
+	// }, [filterPanelRef]);
 
 	const handleSearch = () => {
 		const params = new URLSearchParams(searchParams);
@@ -296,24 +315,57 @@ const FilterPanel = () => {
 		replace(`/?${params.toString()}`);
 	};
 
+	const handleOpenFilterPanel = () => {
+		setOpenFilterPanel(!openFilterPanel);
+	};
+
 	return (
-		<div className="w-full p-5">
-			<p className="">Filters</p>
-			<div className="border-[#42474a] border-[1px] my-4"></div>
+		<div className="relative" ref={filterPanelRef}>
+			<div className="lg:hidden w-10 pl-5">
+				<Image
+					className={`transition duration-200 ease-linear ${
+						openFilterPanel ? "transform rotate-180" : ""
+					}`}
+					src={RightArrow}
+					alt="arrow"
+					width={20}
+					height={20}
+					onClick={handleOpenFilterPanel}
+				/>
+				<div
+					className={`w-[250px] p-5 xs:top-[180px] sm:top=[200px] md:top-[150px] left-0 h-full bg-[#181a1b] text-white transform transition-transform duration-300 ease-in-out ${
+						openFilterPanel ? "translate-x-0" : "-translate-x-full"
+					}`}
+				>
+					<p className="">Filters</p>
+					<div className="border-[#42474a] border-[1px] my-4"></div>
+					<Platforms
+						setSearchFilters={setSearchFilters}
+						searchFilters={searchFilters}
+					/>
+					<div className="border-[#42474a] border-[1px] my-4"></div>
+					<Genres
+						setSearchFilters={setSearchFilters}
+						searchFilters={searchFilters}
+					/>
+					<div className="border-[#42474a] border-[1px] my-4"></div>
+				</div>
+			</div>
 
-			<Platforms
-				setSearchFilters={setSearchFilters}
-				searchFilters={searchFilters}
-			/>
-
-			<div className="border-[#42474a] border-[1px] my-4"></div>
-
-			<Genres
-				setSearchFilters={setSearchFilters}
-				searchFilters={searchFilters}
-			/>
-
-			<div className="border-[#42474a] border-[1px] my-4"></div>
+			<div className="w-[250px] p-5 xs:hidden lg:block">
+				<p className="">Filters</p>
+				<div className="border-[#42474a] border-[1px] my-4"></div>
+				<Platforms
+					setSearchFilters={setSearchFilters}
+					searchFilters={searchFilters}
+				/>
+				<div className="border-[#42474a] border-[1px] my-4"></div>
+				<Genres
+					setSearchFilters={setSearchFilters}
+					searchFilters={searchFilters}
+				/>
+				<div className="border-[#42474a] border-[1px] my-4"></div>
+			</div>
 		</div>
 	);
 };

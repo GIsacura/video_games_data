@@ -3,6 +3,8 @@ import GamesBoard from "@/components/GamesBoard";
 import Link from "next/link";
 import { Suspense } from "react";
 
+import Image from "next/image";
+
 export interface Filters {
 	platforms: string[];
 	genres: string[];
@@ -14,7 +16,7 @@ export default function Home({
 	searchParams?: { limit?: string; offset?: string; name?: string };
 }) {
 	return (
-		<div>
+		<div className="min-h-[100vh - 160px]">
 			<div className="w-full mt-10 mb-5">
 				<p className="text-center">
 					The information provided in this app was obtained from{" "}
@@ -29,12 +31,12 @@ export default function Home({
 				</p>
 			</div>
 			<div className="flex flex-row max-w-[1500px] w-full mx-auto">
-				<section className="w-[250px]">
+				{/* <section>
 					<Suspense fallback={<div>Loading...</div>}>
 						<FilterPanel />
 					</Suspense>
-				</section>
-				<section className="my-[50px] px-5">
+				</section> */}
+				<section className="my-[50px] mx-auto px-5">
 					<GamesBoard searchParams={searchParams} />
 				</section>
 			</div>

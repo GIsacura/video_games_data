@@ -17,7 +17,7 @@ const GameInfoPage = async ({ params }: { params: { id: string } }) => {
 	}
 
 	return (
-		<div className="w-full">
+		<div className="w-full min-h-[100vh - 160px]">
 			<Link href="/">
 				<Image
 					className="mt-3 ml-5 cursor-pointer"
@@ -27,15 +27,17 @@ const GameInfoPage = async ({ params }: { params: { id: string } }) => {
 					height={50}
 				/>
 			</Link>
-			<div className="w-full px-10">
-				<div className="w-full max-w-[1024px] flex h-[400px] my-[60px] mx-auto">
-					<div className="w-[60%] h-full bg-slate-500 rounded-l relative">
-						<p className="-rotate-45 absolute text-center text-[50px] top-[40%] left-[15%]">
+			<div className="w-full px-5 mx-auto lg:px-10">
+				<div className="w-full max-w-[500px] lg:max-w-[1024px] flex xs:flex-col lg:flex-row lg:max-h-fit my-[60px] mx-auto">
+					<div className="w-full h-[300px] flex justify-center items-center lg:w-[60%] lg:h-[600px] bg-slate-500 rounded lg:rounded-l relative">
+						<p className="-rotate-45 text-center text-[20px] lg:text-[50px]">
 							Image not found
 						</p>
 					</div>
-					<div className="w-[40%] pt-5 px-10">
-						<h1 className="xs:text-[20px] md:text-[40px]">{response.name}</h1>
+					<div className="w-full h-full lg:w-[40%] pt-5 lg:px-10">
+						<h1 className="xs:text-[20px] xs:text-center lg:text-[40px]">
+							{response.name}
+						</h1>
 						<div className="bg-[#1f2223] p-3 rounded mb-2">
 							<p className="text-[20px] font-thin">
 								<span className="font-bold">Platforms:</span>{" "}

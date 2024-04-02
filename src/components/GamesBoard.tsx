@@ -57,6 +57,10 @@ const GamesBoard = async ({
 		genres,
 	});
 
+	if (games.records.length === 0) {
+		return <div>No games found</div>;
+	}
+
 	return (
 		<section className="w-full">
 			<p className="text-slate-600">
